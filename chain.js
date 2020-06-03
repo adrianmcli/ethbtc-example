@@ -18,6 +18,11 @@ const server = Ganache.server({
   ],
 });
 
-server.listen(port, () => {
+server.listen(port, async () => {
   console.log("listening on port", port);
+  const provider = new ethers.providers.JsonRpcProvider(
+    `http://localhost:${port}`,
+  );
+  const blockNum = await provider.getBlockNumber();
+  console.log(`Forked off mainnet @ block ${blockNum}`);
 });
