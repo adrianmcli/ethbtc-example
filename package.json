@@ -1,0 +1,19 @@
+{
+  "name": "ethbtc-example",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "chain": "node chain.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@studydefi/money-legos": "^2.3.2",
+    "dotenv": "^8.2.0",
+    "ethers": "^4.0.47",
+    "ganache-core": "^2.10.2"
+  }
+}
