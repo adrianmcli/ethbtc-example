@@ -37,19 +37,19 @@ const main = async () => {
 
   // global collateral amount = raw total collateral * cumulative fee multiplier
   const cumFeeMultiplier = fromWei(await emp.cumulativeFeeMultiplier());
-  const totalCollateralRaw = fromWei(await emp.rawTotalPositionCollateral());
-  const totalCollateral = totalCollateralRaw * cumFeeMultiplier;
+  const totalCollateralRaw = await emp.rawTotalPositionCollateral();
+  const totalCollateral = totalCollateralRaw.mul(cumFeeMultiplier);
 
   // collateral to tokens ratio = global collateral amount / total tokens
-  const totalTokens = fromWei(await emp.totalTokensOutstanding());
-  const collateralToTokensRatio = totalCollateral / totalTokens;
+  const totalTokens = await emp.totalTokensOutstanding();
+  const collateralToTokensRatio = fromWei(totalCollateral) / fromWei(totalTokens);
 
   console.log("\nCalculate Ratio of Collateral to Tokens");
   console.log("---------------------------------------");
-  console.log("cumFeeMultiplier", cumFeeMultiplier);
-  console.log("totalCollateral", totalCollateral);
-  console.log("totalTokens", totalTokens);
-  console.log("collateralToTokensRatio", collateralToTokensRatio);
+  console.log("cumFeeMultiplier", cumFeeMultiplier.toString());
+  console.log("totalCollateral", totalCollateral.toString());
+  console.log("totalTokens", totalTokens.toString());
+  console.log("collateralToTokensRatio", collateralToTokensRatio.toString());
 
   // get ETH/BTC price and figure out how over-collateralized the EMP is
   const ethbtcPrice = await getEthBtcPrice(wallet);
