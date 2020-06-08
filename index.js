@@ -1,6 +1,5 @@
 require("dotenv").config();
 const { ethers } = require("ethers");
-const bigNumberify = ethers.utils.bigNumberify;
 
 const uma = require("@studydefi/money-legos/uma");
 const erc20 = require("@studydefi/money-legos/erc20");
@@ -20,6 +19,14 @@ const main = async () => {
 
   // we need to get some DAI as collateral first
   await getDai(wallet);
+
+  // and allow the EMP to move some of our DAI
+  const daiContract = new ethers.Contract(
+    erc20.dai.address,
+    erc20.dai.abi,
+    wallet,
+  );
+  await daiContract.approve(ethbtcEMPAddress, toWei("1000000"));
 
   // create ETH/BTC EMP instance
   const emp = new ethers.Contract(
@@ -62,13 +69,6 @@ const main = async () => {
   console.log("minSponsorTokens", minSponsorTokens);
   console.log("minCollateral", minCollateral);
 
-  const daiContract = new ethers.Contract(
-    erc20.dai.address,
-    erc20.dai.abi,
-    wallet,
-  );
-
-  await daiContract.approve(ethbtcEMPAddress, toWei("1000000"));
   const tokenAddress = await emp.tokenCurrency();
   const token = new ethers.Contract(tokenAddress, erc20.abi, wallet);
 
