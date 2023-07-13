@@ -14,6 +14,6 @@
     "@studydefi/money-legos": "^2.3.2",
     "dotenv": "^8.2.0",
     "ethers": "^4.0.47",
-    "ganache-core": "^2.10.2"
+    "ganache-core": "^2.13.2"
   }
 }
